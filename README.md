@@ -1,8 +1,9 @@
-# React + Vite
+Доброго дня!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Вітаю Вас в репозиторію тестового завдання для Viatec!
 
-Currently, two official plugins are available:
+Проект було створено за допомогою Vite, а задеплоєно за допомогою Vercel. Мною були виконані всі пункти, які передбачало технічне завдання. Було створенно веб-додаток для управління списком завдань. Користувачі мають можливість додавати, редагувати, видаляти та відзначати завдання як виконані. Також вони можуть відфільтрувати завдання і бачити перед собою тільки виконані, тільки не виконані або всі завдання.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Загалом на тестове завдання я витратив близько 9 годин чистого часу.
+
+Приємного перегляду!

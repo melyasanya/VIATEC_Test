@@ -1,37 +1,43 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import PropTypes from "prop-types";
 
 import { addTask } from "../../redux/Tasks/TasksSlice";
+import { taskCheckValues } from "../../utils/filterValues";
 
-import css from "./AddTaskModal.module.css";
-
-export const AddTaskModal = ({ handleModal, show }) => {
+export const AddTaskModal = ({
+  handleModal,
+  show,
+  validated,
+  setValidated,
+}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [checked, setChecked] = useState(false);
-  const [validated, setValidated] = useState(false);
 
   const handleModalChange = (e) => {
-    if (e.target.id === "taskName") {
-      setName(e.target.value);
-    } else if (e.target.id === "taskDescription") {
-      setDescription(e.target.value);
-    } else if (e.target.id === "taskChecked") {
-      e.target.value === "1" ? setChecked(false) : setChecked(true);
+    const { value, id } = e.target;
+    if (id === "taskName") {
+      setName(value);
+    } else if (id === "taskDescription") {
+      setDescription(value);
+    } else if (id === "taskChecked") {
+      value === "0" ? setChecked(false) : setChecked(true);
     }
   };
+
   const handleSubmit = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
-      console.log(form);
     } else {
+      e.preventDefault();
       const newTask = {
         name,
         description,
@@ -40,6 +46,8 @@ export const AddTaskModal = ({ handleModal, show }) => {
       };
       dispatch(addTask(newTask));
       handleModal();
+      setName("");
+      setDescription("");
     }
     setValidated(true);
   };
@@ -58,7 +66,7 @@ export const AddTaskModal = ({ handleModal, show }) => {
           onSubmit={handleSubmit}
         >
           <Form.Label htmlFor="taskName">
-            Назва <span className={css.requiredStar}>*</span>
+            Назва <span className="text-danger">*</span>
           </Form.Label>
           <Form.Control
             type="text"
@@ -68,7 +76,7 @@ export const AddTaskModal = ({ handleModal, show }) => {
             required
           />
           <Form.Label htmlFor="taskDescription">
-            Опис <span className={css.requiredStar}>*</span>
+            Опис <span className="text-danger">*</span>
           </Form.Label>
           <Form.Control
             as="textarea"
@@ -79,8 +87,8 @@ export const AddTaskModal = ({ handleModal, show }) => {
             required
           />
           <Form.Select id="taskChecked" aria-label="Task check selection">
-            <option value="1">Не виконано</option>
-            <option value="2">Виконано</option>
+            <option value="0">{taskCheckValues[0]}</option>
+            <option value="1">{taskCheckValues[1]}</option>
           </Form.Select>
         </Form>
       </Modal.Body>
@@ -94,4 +102,11 @@ export const AddTaskModal = ({ handleModal, show }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+AddTaskModal.propTypes = {
+  handleModal: PropTypes.func,
+  show: PropTypes.bool,
+  validated: PropTypes.bool,
+  setValidated: PropTypes.func,
 };

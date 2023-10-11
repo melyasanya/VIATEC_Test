@@ -1,11 +1,11 @@
+import { Filter } from "../Filter/Filter";
 import { TasksList } from "../TasksList/TasksList";
-
-import css from "./Tasks.module.css";
 
 export const Tasks = () => {
   return (
     <div>
-      <h1 className={css.tasksHeader}>Завдання</h1>
+      <h1 className="my-4 text-center">Завдання</h1>
+      <Filter />
       <TasksList />
     </div>
   );

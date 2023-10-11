@@ -1,9 +1,13 @@
 import { Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { filter } from "../../redux/Tasks/TasksSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-export const Filter = ({ filterValues }) => {
+import { getFilterValue } from "../../redux/Tasks/TasksSelectors";
+import { filter } from "../../redux/Tasks/TasksSlice";
+import { filterValues } from "../../utils/filterValues";
+
+export const Filter = () => {
   const dispatch = useDispatch();
+  const filterValue = useSelector(getFilterValue);
 
   const handleFilter = (e) => {
     dispatch(filter(e.target.value));
@@ -15,6 +19,7 @@ export const Filter = ({ filterValues }) => {
         aria-label="Default select example"
         className="mb-4 w-50"
         onChange={handleFilter}
+        defaultValue={filterValue}
       >
         <option value="0">{filterValues[0]}</option>
         <option value="1">{filterValues[1]}</option>
