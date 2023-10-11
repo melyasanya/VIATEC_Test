@@ -22,6 +22,10 @@ textarea {
   margin-bottom: 28px;
 }
 
+li {
+  list-style: none;
+}
+
 .container {
   margin: 0 auto;
   padding: 0 20px;

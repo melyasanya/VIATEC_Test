@@ -47,7 +47,7 @@ export const AddTaskModal = ({ handleModal, show }) => {
   return (
     <Modal show={show} onHide={handleModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Додати завдання</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form
@@ -86,10 +86,10 @@ export const AddTaskModal = ({ handleModal, show }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleModal}>
-          Close
+          Закрити
         </Button>
         <Button variant="primary" type="submit" form="addTaskFrom">
-          Save Changes
+          Додати
         </Button>
       </Modal.Footer>
     </Modal>

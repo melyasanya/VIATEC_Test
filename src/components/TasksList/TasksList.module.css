@@ -1,0 +1,22 @@
+.tasksList {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.taskCard {
+  width: 18rem;
+  min-height: 200px;
+}
+
+.taskCardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardBtns {
+  display: flex;
+  justify-content: space-between;
+}
