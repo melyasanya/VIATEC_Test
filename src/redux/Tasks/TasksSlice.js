@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allTasks: [],
+  filterValue: "0",
 };
 
 const taskSlice = createSlice({
@@ -39,8 +40,12 @@ const taskSlice = createSlice({
         };
       }
     },
+    filter(state, action) {
+      state.filterValue = action.payload;
+    },
   },
 });
 
 export const taskReducer = taskSlice.reducer;
-export const { addTask, deleteTask, editTask, editCheck } = taskSlice.actions;
+export const { addTask, deleteTask, editTask, editCheck, filter } =
+  taskSlice.actions;

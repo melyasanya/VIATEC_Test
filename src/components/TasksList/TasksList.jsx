@@ -1,76 +1,76 @@
-import { useDispatch, useSelector } from "react-redux";
-import Card from "react-bootstrap/Card";
-import { Button, Form } from "react-bootstrap";
+import { getFilterValue, getTasks } from "../../redux/Tasks/TasksSelectors";
 
-import { getTasks } from "../../redux/Tasks/TasksSelectors";
-
-import css from "./TasksList.module.css";
-import { deleteTask, editCheck } from "../../redux/Tasks/TasksSlice";
 import { EditTaskModal } from "../EditTaskModal/EditTaskModal";
 import { useState } from "react";
+import { Filter } from "../Filter/Filter";
+import { TaskListItem } from "../TaskListItem/TaskListItem";
+import { useSelector } from "react-redux";
+import css from "./TaskList.module.css";
+
+const filterValues = ["Всі", "Виконані", "Не виконані"];
 
 export const TasksList = () => {
-  const dispatch = useDispatch();
   const { allTasks } = useSelector(getTasks);
+  const filterValue = useSelector(getFilterValue);
   const [show, setShow] = useState(false);
   const [idToEdit, setIdToEdit] = useState("");
 
   const handleModal = () => setShow(!show);
 
-  const handleEdit = (id) => {
-    setShow(!show);
-    setIdToEdit(id);
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deleteTask(id));
-  };
-
-  const handleCheckChange = (id) => {
-    dispatch(editCheck(id));
-  };
-
   return (
     <>
+      <Filter filterValues={filterValues} />
       <ul className={css.tasksList}>
-        {allTasks.length > 0 &&
-          allTasks.map((task) => {
-            return (
-              <li key={task.id}>
-                <Card className={css.taskCard}>
-                  <Card.Body className={css.taskCardBody}>
-                    <div>
-                      <Card.Title>{task.name}</Card.Title>
-                      <Card.Text>{task.description}</Card.Text>
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check
-                          type="checkbox"
-                          label="Виконано"
-                          defaultChecked={task.checked}
-                          onChange={() => handleCheckChange(task.id)}
-                        />
-                      </Form.Group>
-                    </div>
-
-                    <div className={css.cardBtns}>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleEdit(task.id)}
-                      >
-                        Редагувати
-                      </Button>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleDelete(task.id)}
-                      >
-                        Видалити
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </li>
-            );
-          })}
+        {allTasks.length > 0 && filterValue === "0"
+          ? allTasks.map((task) => {
+              return (
+                <TaskListItem
+                  key={task.id}
+                  name={task.name}
+                  description={task.description}
+                  checked={task.checked}
+                  id={task.id}
+                  isModalShown={show}
+                  setModal={setShow}
+                  setId={setIdToEdit}
+                />
+              );
+            })
+          : filterValue === "1"
+          ? allTasks
+              .filter((task) => task.checked)
+              .map((task) => {
+                return (
+                  <TaskListItem
+                    key={task.id}
+                    name={task.name}
+                    description={task.description}
+                    checked={task.checked}
+                    id={task.id}
+                    isModalShown={show}
+                    setModal={setShow}
+                    setId={setIdToEdit}
+                  />
+                );
+              })
+          : filterValue === "2"
+          ? allTasks
+              .filter((task) => !task.checked)
+              .map((task) => {
+                return (
+                  <TaskListItem
+                    key={task.id}
+                    name={task.name}
+                    description={task.description}
+                    checked={task.checked}
+                    id={task.id}
+                    isModalShown={show}
+                    setModal={setShow}
+                    setId={setIdToEdit}
+                  />
+                );
+              })
+          : ""}
         <EditTaskModal handleModal={handleModal} show={show} id={idToEdit} />
       </ul>
     </>

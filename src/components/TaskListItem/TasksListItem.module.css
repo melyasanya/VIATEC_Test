@@ -1,9 +1,3 @@
-.tasksList {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
 .taskCard {
   width: 18rem;
   min-height: 200px;
