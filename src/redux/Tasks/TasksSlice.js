@@ -18,17 +18,29 @@ const taskSlice = createSlice({
       state.allTasks.splice(index, 1);
     },
     editTask(state, action) {
-      state.allTasks.map((task) => {
-        if (task.id === action.payload.id)
-          return {
-            ...task,
-            name: action.payload.name,
-            description: action.payload.description,
-          };
-      });
+      const { id, name, description } = action.payload;
+      const taskIndex = state.allTasks.findIndex((task) => task.id === id);
+      if (taskIndex !== -1) {
+        state.allTasks[taskIndex] = {
+          ...state.allTasks[taskIndex],
+          name,
+          description,
+        };
+      }
+    },
+    editCheck(state, action) {
+      const taskIndex = state.allTasks.findIndex(
+        (task) => task.id === action.payload
+      );
+      if (taskIndex !== -1) {
+        state.allTasks[taskIndex] = {
+          ...state.allTasks[taskIndex],
+          checked: !state.allTasks[taskIndex].checked,
+        };
+      }
     },
   },
 });
 
 export const taskReducer = taskSlice.reducer;
-export const { addTask, deleteTask, editTask } = taskSlice.actions;
+export const { addTask, deleteTask, editTask, editCheck } = taskSlice.actions;

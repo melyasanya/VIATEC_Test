@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap";
 import { getTasks } from "../../redux/Tasks/TasksSelectors";
 
 import css from "./TasksList.module.css";
-import { deleteTask } from "../../redux/Tasks/TasksSlice";
+import { deleteTask, editCheck } from "../../redux/Tasks/TasksSlice";
 import { EditTaskModal } from "../EditTaskModal/EditTaskModal";
 import { useState } from "react";
 
@@ -26,6 +26,10 @@ export const TasksList = () => {
     dispatch(deleteTask(id));
   };
 
+  const handleCheckChange = (id) => {
+    dispatch(editCheck(id));
+  };
+
   return (
     <>
       <ul className={css.tasksList}>
@@ -43,6 +47,7 @@ export const TasksList = () => {
                           type="checkbox"
                           label="Виконано"
                           defaultChecked={task.checked}
+                          onChange={() => handleCheckChange(task.id)}
                         />
                       </Form.Group>
                     </div>
